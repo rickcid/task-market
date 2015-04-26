@@ -9,15 +9,15 @@
               <div class="input-group-addon">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
               </div>
-                  <input type="text" ng-model="searchTask" class="form-control" placeholder="Search">
-              </div>  
+              <input type="text" ng-model="searchTask" class="form-control" placeholder="Search">
+            </div>  
           </div>
           <div class="title">
             <a href="#/post" class="btn btn-warning">Post a Task</a>
           </div>          
           
           <!-- TASK LIST -->  
-          <a ng-repeat="task in tasks | filter: searchTask | orderBy: 'title'" ng-href="#/edit/{{task.$id}}">
+          <a ng-repeat="task in tasks | filter: searchTask | orderBy: 'title'" ng-href="#/edit/{{task.$id}}"><!--use a $ because it's a firebase obj, use ng-href because of {{}} inclusion in href -->
             <div class="list-group-item">                 
                   <div class="row-content">
                       <h4 class="list-group-item-heading">{{task.title | limitTo:25}}{{ task.title.length > 25? "..." : ""}}</h4>
