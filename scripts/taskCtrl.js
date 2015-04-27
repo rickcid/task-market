@@ -1,4 +1,5 @@
-'use strict';
+var app = angular.module('TaskMarketApp');
+//'use strict';
 
 app.controller('TaskController', function($scope, FURL, $firebase, $location, $routeParams){//$routeParams gets the id from url
 
@@ -10,7 +11,7 @@ app.controller('TaskController', function($scope, FURL, $firebase, $location, $r
     $scope.selectedTask = getTask(taskId);
   }
 
-  //This is a private function, not in scope, used to get the task from taskId
+  //This is a private function, not in scope, used to get the task from taskId in firebase
   function getTask(taskId) {
     return $firebase(ref.child('tasks').child(taskId)).$asObject();
   }

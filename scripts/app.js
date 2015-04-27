@@ -1,4 +1,4 @@
-'use strict';
+//'use strict';
 
 var app = angular.module('TaskMarketApp', ['ngAnimate', 'ngResource', 'ngRoute', 'firebase']);
   
@@ -8,6 +8,12 @@ app.config(function($routeProvider) {
   $routeProvider      
     .when('/', {
       templateUrl: 'views/main.html'        
+    })
+    .when('/login', {
+      templateUrl: 'views/login.html'
+    })
+    .when('/register', {
+      templateUrl: 'views/register.html'
     })
     .when('/post', {
       templateUrl: 'views/post.html',
