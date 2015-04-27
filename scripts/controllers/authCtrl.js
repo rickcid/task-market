@@ -1,23 +1,31 @@
 var app = angular.module('TaskMarketApp');
 //'use strict';
 
-app.controller('AuthController', function($scope, $location, Auth) {
+app.controller('AuthController', function($scope, $location, Auth, toaster) {
+
+  if (Auth.signedIn()) {
+    $location.path('/');
+  }
 
   $scope.register = function(user) {
     Auth.register(user).then(function() {//promise, once successfully registers, then console log
-      console.log("Register successfully!");
+      toaster.pop('success', 'You have registered successfully.');
+      //console.log("Register successfully!");
       $location.path('/');//redirect user to index
     }, function(err) {
-      console.log("Error...");
+      toaster.pop('error', 'Oops, something went wrong!');
+      //console.log("Error...");
     });
   };
 
   $scope.login = function(user) {
     Auth.login(user).then(function() {
-      console.log("Logged in successfully!");
+      toaster.pop('success', 'You have logged in successfully.');
+      //console.log("Logged in successfully!");
       $location.path('/');
     }, function(err) {
-      console.log("Error...");
+      toaster.pop('error', 'Oops, something went wrong!');
+      //console.log("Error...");
     });
   };
 
@@ -30,9 +38,11 @@ app.controller('AuthController', function($scope, $location, Auth) {
       $scope.user.oldPass = '';
       $scope.user.newPass = '';
 
-      console.log("Password changed successfully!");
+      toaster.pop('success', "Password change was successfull.");
+      //console.log("Password changed successfully!");
     }, function(err) {
-      console.log("Error...");
+      toaster.pop('error', 'Oops, something went wrong!');
+      //console.log("Error...");
     });
   };
 

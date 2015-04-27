@@ -1,1 +1,1 @@
-# Build an MVP with AngularJS + FireBase by cloning TaskRabbit
+# Build an MVP with AngularJS + FireBase

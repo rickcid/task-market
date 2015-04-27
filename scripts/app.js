@@ -1,6 +1,6 @@
 //'use strict';
 
-var app = angular.module('TaskMarketApp', ['ngAnimate', 'ngResource', 'ngRoute', 'firebase']);
+var app = angular.module('TaskMarketApp', ['ngAnimate', 'ngResource', 'ngRoute', 'firebase', 'toaster']);
   
 app.constant('FURL', 'https://task-market.firebaseIO.com');
   

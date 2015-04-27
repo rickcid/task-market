@@ -1,7 +1,7 @@
 var app = angular.module('TaskMarketApp');
 //'use strict';
 
-app.controller('TaskController', function($scope, FURL, $firebase, $location, $routeParams){//$routeParams gets the id from url
+app.controller('TaskController', function($scope, FURL, $firebase, $location, $routeParams, toaster){//$routeParams gets the id from url
 
   var ref = new Firebase(FURL);//initializes connection to firebase & returns ref var
   var fbTasks = $firebase(ref.child('tasks')).$asArray();//creates a node named task to firebase & returns an array
@@ -18,6 +18,7 @@ app.controller('TaskController', function($scope, FURL, $firebase, $location, $r
 
   $scope.updateTask = function(task) {
     $scope.selectedTask.$save(task);//$save() updates the task object
+    toaster.pop('success', "Your favor was updated.");
     $location.path('/browse');//redirects to browse view once update is processed
   }
 
@@ -25,6 +26,7 @@ app.controller('TaskController', function($scope, FURL, $firebase, $location, $r
 
   $scope.postTask = function(task) {
     fbTasks.$add(task);//adds the local data to the array on firebase
+    toaster.pop('success', "Yay, your favor was created!");
     $location.path('/browse');
   }
 });
