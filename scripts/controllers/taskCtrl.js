@@ -1,32 +1,26 @@
 var app = angular.module('TaskMarketApp');
 //'use strict';
 
-app.controller('TaskController', function($scope, FURL, $firebase, $location, $routeParams, toaster){//$routeParams gets the id from url
+app.controller('TaskController', function($scope, $location, toaster, Task, Auth) {
 
-  var ref = new Firebase(FURL);//initializes connection to firebase & returns ref var
-  var fbTasks = $firebase(ref.child('tasks')).$asArray();//creates a node named task to firebase & returns an array
-  var taskId = $routeParams.taskId;
+  $scope.createTask = function() {
+    $scope.task.status = 'open';
+    $scope.task.gravatar = Auth.user.profile.gravatar;
+    $scope.task.name = Auth.user.profile.name;
+    $scope.task.poster = Auth.user.uid;
 
-  if (taskId) { //checks if a taskId is provided in url, if so it gets the task from taskId
-    $scope.selectedTask = getTask(taskId);
-  }
+    Task.createTask($scope.task).then(function(ref) {//createTask() returns a promise, the 'ref' param is data returned from firebase
+      toaster.pop('success', 'Yay, your favor was created successfully!');
+      $scope.task = {title: '', description: '', total: '', status: 'open', gravatar: '', name: '', poster: ''};
+      $location.path('/browse/' + ref.key()); //using key() gives us task id of a task just created    
+    });
+  };
 
-  //This is a private function, not in scope, used to get the task from taskId in firebase
-  function getTask(taskId) {
-    return $firebase(ref.child('tasks').child(taskId)).$asObject();
-  }
+  $scope.editTask = function(task) {
+    Task.editTask(task).then(function() {
+      toaster.pop('success', 'Your favor was updated.');
+    });
+  };
 
-  $scope.updateTask = function(task) {
-    $scope.selectedTask.$save(task);//$save() updates the task object
-    toaster.pop('success', "Your favor was updated.");
-    $location.path('/browse');//redirects to browse view once update is processed
-  }
 
-  $scope.tasks = fbTasks;//creates an array of all tasks created on firebase
-
-  $scope.postTask = function(task) {
-    fbTasks.$add(task);//adds the local data to the array on firebase
-    toaster.pop('success', "Yay, your favor was created!");
-    $location.path('/browse');
-  }
 });

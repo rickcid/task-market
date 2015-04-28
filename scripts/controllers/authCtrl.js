@@ -11,7 +11,7 @@ app.controller('AuthController', function($scope, $location, Auth, toaster) {
     Auth.register(user).then(function() {//promise, once successfully registers, then console log
       toaster.pop('success', 'You have registered successfully.');
       //console.log("Register successfully!");
-      $location.path('/');//redirect user to index
+      $location.path('/dashboard');
     }, function(err) {
       toaster.pop('error', 'Oops, something went wrong!');
       //console.log("Error...");
@@ -22,7 +22,7 @@ app.controller('AuthController', function($scope, $location, Auth, toaster) {
     Auth.login(user).then(function() {
       toaster.pop('success', 'You have logged in successfully.');
       //console.log("Logged in successfully!");
-      $location.path('/');
+      $location.path('/dashboard');
     }, function(err) {
       toaster.pop('error', 'Oops, something went wrong!');
       //console.log("Error...");
