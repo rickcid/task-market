@@ -48,8 +48,14 @@ app.factory('Auth', function(FURL, $firebaseAuth, $firebase) {//defines function
     },
 
     signedIn: function() {//this function checks whether user is signed in.
-      return !!Auth.user.provider;// equivalent to Auth.user && Auth.user.provider
+      return !!Auth.user.provider;// equivalent to Auth.user && Auth.user.provider, using !! means (0, undefined, null, etc) = false | otherwise = true
+    },
+
+    requireAuth: function() {
+      //$requireAuth() is an angular helper method that resolves the promise successfully if a user is authenticated and rejects otherwise.
+      return auth.$requireAuth();
     }
+
   };
 
   auth.$onAuth(function(authData) {//function will allow us to know when user logs in/out, in order to release resource. $onAuth listens to auth state

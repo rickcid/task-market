@@ -41,7 +41,16 @@ app.controller('BrowseController', function($scope, $routeParams, toaster, Task,
       $scope.isTaskCreator = Task.isCreator;
       
       // Check if the selectedTask is open
-      $scope.isOpen = Task.isOpen;      
+      $scope.isOpen = Task.isOpen;
+      
+      // --------------------------------------------//
+
+      // Check if the current user is assigned for the selected task
+      $scope.isAssignee = Task.isAssignee;
+
+      // Check if the selectedTask is completed
+      $scope.isCompleted = Task.isCompleted;
+
     }
 
     //obtain a list of comments for the selected task
@@ -116,6 +125,23 @@ app.controller('BrowseController', function($scope, $routeParams, toaster, Task,
 
       // Unblock the Offer button on Offer modal
       $scope.block = false;     
+    });
+  };
+
+  // --------------------------------------------//
+
+  $scope.acceptOffer = function(offerId, runnerId) {
+    Offer.acceptOffer($scope.selectedTask.$id, offerId, runnerId).then(function() {
+      toaster.pop('success', "Offer is accepted successfully!");
+
+      // Mark that this Task has been assigned
+      // $scope.isAssigned = true;
+    });
+  };
+
+  $scope.completeTask = function(taskId) {
+    Task.completeTask(taskId).then(function() {
+      toaster.pop('success', 'Congratulations! You have completed this Favor.');
     });
   };
 
