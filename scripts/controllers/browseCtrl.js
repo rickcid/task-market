@@ -72,7 +72,7 @@ app.controller('BrowseController', function($scope, $routeParams, toaster, Task,
   $scope.cancelTask = function(taskId) {
     //added .then to asssure notification is presented only when process is complete
     Task.cancelTask(taskId).then(function() {
-      toaster.pop('success', "This task is cancelled successfully.");
+      toaster.pop('success', "This favor was cancelled successfully.");
     });
   };
 
@@ -102,7 +102,7 @@ app.controller('BrowseController', function($scope, $routeParams, toaster, Task,
     };
 
     Offer.makeOffer($scope.selectedTask.$id, offer).then(function() {
-      toaster.pop('success', "Your offer has been placed.");
+      toaster.pop('success', "Your favor offer has been placed.");
       
       // Mark that the current user has offerred for this task.
       $scope.alreadyOffered = true;
@@ -118,7 +118,7 @@ app.controller('BrowseController', function($scope, $routeParams, toaster, Task,
 
   $scope.cancelOffer = function(offerId) {
     Offer.cancelOffer($scope.selectedTask.$id, offerId).then(function() {
-      toaster.pop('success', "Your offer has been cancelled.");
+      toaster.pop('success', "Your favor offer has been cancelled.");
 
       // Mark that the current user has cancelled offer for this task.
       $scope.alreadyOffered = false;
@@ -132,10 +132,9 @@ app.controller('BrowseController', function($scope, $routeParams, toaster, Task,
 
   $scope.acceptOffer = function(offerId, runnerId) {
     Offer.acceptOffer($scope.selectedTask.$id, offerId, runnerId).then(function() {
-      toaster.pop('success', "Offer is accepted successfully!");
+      toaster.pop('success', "Favor offer was accepted successfully!");
 
-      // Mark that this Task has been assigned
-      // $scope.isAssigned = true;
+      Offer.notifyRunner($scope.selectedTask.$id, runnerId);
     });
   };
 

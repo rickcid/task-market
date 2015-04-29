@@ -1,5 +1,4 @@
 var app = angular.module('TaskMarketApp');
-//'use strict';
 
 app.factory('Auth', function(FURL, $firebaseAuth, $firebase) {//defines functionality of service
 
@@ -21,6 +20,10 @@ app.factory('Auth', function(FURL, $firebaseAuth, $firebase) {//defines function
 
       var profileRef = $firebase(ref.child('profile'));
       return profileRef.$set(uid, profile);
+    },
+
+    getProfile: function(uid) {
+      return $firebase(ref.child('profile').child(uid)).$asObject();
     },
 
     login: function(user) {
