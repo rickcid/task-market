@@ -57,17 +57,32 @@ app.factory('Offer', function(FURL, $firebase, $q, Auth, Task) {
       // Step 1: Update Offer with accepted = true
       var o = this.getOffer(taskId, offerId);
       return o.$update({accepted: true})
-        .then(function() {        
-            
-          // Step 2: Update Task with status = "assigned" and runnerId
-          var t = Task.getTask(taskId);     
-          return t.$update({status: "assigned", runner: runnerId}); 
-        })
-        .then(function() {          
+      .then(function() {        
+          
+        // Step 2: Update Task with status = "assigned" and runnerId
+        var t = Task.getTask(taskId);     
+        return t.$update({status: "assigned", runner: runnerId}); 
+      })
+      .then(function() {          
 
-          // Step 3: Create User-Tasks lookup record for use in Dashboard
-          return Task.createUserTasks(taskId);
-        });
+        // Step 3: Create User-Tasks lookup record for use in Dashboard
+        return Task.createUserTasks(taskId);
+      });
+    },
+
+    notifyRunner: function(taskId, runnerId) {
+      Auth.getProfile(runnerId).$loaded().then(function(runner) {
+
+        var n = {
+          taskId: taskId,
+          email: runner.email,
+          name: runner.name
+        };
+
+        var notifications = $firebase(ref.child('notifications')).$asArray();
+        return  notifications.$add(n);
+
+      });
     }
 
   };
