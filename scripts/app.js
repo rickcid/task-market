@@ -15,11 +15,11 @@ app.constant('FURL', 'https://task-market.firebaseIO.com')
   
 app.config(function($routeProvider) {
   $routeProvider      
-    /*.when('/', {
+    .when('/', {
       templateUrl: 'views/main.html',
       controller: 'BrowseController'       
-    })*/
-    .when('/', {
+    })
+    .when('/browse', {
       templateUrl: 'views/browse.html',
       controller: 'BrowseController'       
     })
